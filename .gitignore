@@ -1,1 +1,3 @@
 lights_venv
+*serviceAccount.json
+.idea
