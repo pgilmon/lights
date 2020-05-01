@@ -41,7 +41,6 @@ def save_new_state(ext_id, new_state):
     try:
         # Next line throws exception if we don't have default credentials
         cred.get_credential()
-        firebase_admin.initialize_app(cred)
         firebase_admin.initialize_app(cred, {
             'projectId': os.environ.get('GCP_PROJECT')
         })
