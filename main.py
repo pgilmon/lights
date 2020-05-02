@@ -37,18 +37,23 @@ def main(request):
 
 def save_new_state(ext_id, new_state):
     logging.info('Saving new state. ext_id: [%s], new_state: [%s]', ext_id, new_state)
-    cred = credentials.ApplicationDefault()
+    # Try to get app. Initialize if app doesn't exist.
     try:
-        # Next line throws exception if we don't have default credentials
-        cred.get_credential()
-        firebase_admin.initialize_app(cred, {
-            'projectId': os.environ.get('GCP_PROJECT')
-        })
-    except auth_exceptions.DefaultCredentialsError:
-        # Use key file if we don't have default credentials
-        logging.info('Using key file for credentials')
-        cred = credentials.Certificate('test_serviceAccount.json')
-        firebase_admin.initialize_app(cred)
+        firebase_admin.get_app()
+    except ValueError:
+        # If app doesn't exist ValueError is raised. Create app.
+        cred = credentials.ApplicationDefault()
+        try:
+            # Next line throws exception if we don't have default credentials.
+            cred.get_credential()
+            firebase_admin.initialize_app(cred, {
+                'projectId': os.environ.get('GCP_PROJECT')
+            })
+        except auth_exceptions.DefaultCredentialsError:
+            # Use key file if we don't have default credentials.
+            logging.info('Using key file for credentials')
+            cred = credentials.Certificate('test_serviceAccount.json')
+            firebase_admin.initialize_app(cred)
 
     db = firestore.client()
 
