@@ -36,7 +36,7 @@ def main(request):
 
 
 def save_new_state(ext_id, new_state):
-    logging.info('Saving new state. ext_id: [%s], new_state: [%s]', ext_id, new_state)
+    logging.debug('Saving new state. ext_id: [%s], new_state: [%s]', ext_id, new_state)
     # Try to get app. Initialize if app doesn't exist.
     try:
         firebase_admin.get_app()
