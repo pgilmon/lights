@@ -9,8 +9,9 @@ from google.auth import exceptions as auth_exceptions
 import google.cloud.logging
 
 # Set-up logging
-client = google.cloud.logging.Client()
-client.setup_logging()
+logger = logging.getLogger("lights_listener")
+logger.setLevel(logging.INFO)
+logger.addHandler(google.cloud.logging.Client().get_default_handler())
 
 # Param names
 EXT_ID = 'ext_id'
@@ -26,17 +27,17 @@ def main(request):
         Response object using
         `make_response <http://flask.pocoo.org/docs/1.0/api/#flask.Flask.make_response>`.
     """
-    logging.debug('Invoked')
+    logger.debug('Invoked')
     request_args = request.args
     if EXT_ID in request_args and ACTION in request_args:
         save_new_state(request_args[EXT_ID], request_args[ACTION])
     else:
-        logging.warning('Request with no expected arguments: %s', request)
+        logger.warning('Request with no expected arguments: %s', request)
     return "Success"
 
 
 def save_new_state(ext_id, new_state):
-    logging.debug('Saving new state. ext_id: [%s], new_state: [%s]', ext_id, new_state)
+    logger.info('Saving new state. ext_id: [%s], new_state: [%s]', ext_id, new_state)
     # Try to get app. Initialize if app doesn't exist.
     try:
         firebase_admin.get_app()
@@ -51,7 +52,7 @@ def save_new_state(ext_id, new_state):
             })
         except auth_exceptions.DefaultCredentialsError:
             # Use key file if we don't have default credentials.
-            logging.info('Using key file for credentials')
+            logger.info('Using key file for credentials')
             cred = credentials.Certificate('test_serviceAccount.json')
             firebase_admin.initialize_app(cred)
 
@@ -62,4 +63,4 @@ def save_new_state(ext_id, new_state):
         u'status': new_state,
         u'lastUpdate': time.time(),
     })
-    logging.debug('Finished saving new state')
+    logger.debug('Finished saving new state')
