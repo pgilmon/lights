@@ -22,7 +22,7 @@ def actuator(request):
     # Get default credentials.
     creds = google.auth.default(scopes=SCOPES)
     http = google_auth_httplib2.AuthorizedHttp(creds)
-    service = discovery.build('sheets', 'v4', http=http)
+    service = discovery.build('sheets', 'v4', http=http, cache_discovery=False)
 
     # Get values from sheets API.
     sheet = service.spreadsheets()
