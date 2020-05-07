@@ -18,7 +18,7 @@ EXT_ID = 'ext_id'
 ACTION = 'action'
 
 
-def main(request):
+def monitor(request):
     """Responds to any HTTP request.
     Args:
         request (flask.Request): HTTP request object.

@@ -16,7 +16,7 @@ SPREADSHEET_ID = '18s0N297eQZjQAcXqDeRjDSdlaniIsoW-JTRUU5aW4R8'
 RANGE_NAME = 'Sheet1!B1:G4'
 
 
-def main(request):
+def actuator(request):
     logger.info("on main()")
 
     # Get default credentials.
