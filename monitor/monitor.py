@@ -9,7 +9,7 @@ from google.auth import exceptions as auth_exceptions
 import google.cloud.logging
 
 # Set-up logging
-logger = logging.getLogger("lights_listener")
+logger = logging.getLogger("lights_monitor")
 logger.setLevel(logging.INFO)
 logger.addHandler(google.cloud.logging.Client().get_default_handler())
 
