@@ -20,7 +20,7 @@ def actuator(request):
     logger.info("on main()")
 
     # Get default credentials.
-    creds = google.auth.default(scopes=SCOPES)
+    creds, project_id = google.auth.default(scopes=SCOPES)
     http = google_auth_httplib2.AuthorizedHttp(creds)
     service = discovery.build('sheets', 'v4', http=http, cache_discovery=False)
 
