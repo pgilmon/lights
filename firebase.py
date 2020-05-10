@@ -16,7 +16,7 @@ STATUS_ON = "on"
 STATUS_OFF = "off"
 
 def get_key():
-    return get_firebase_db().collection(u'proteins').document(u'79ns0oYmCQeYOAkMsq5e')
+    return get_firebase_db().collection(u'proteins').document(u'79ns0oYmCQeYOAkMsq5e').get().get('generic')
 
 def get_lights():
     return get_firebase_db().collection(u'lights')
