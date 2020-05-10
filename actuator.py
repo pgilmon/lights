@@ -84,7 +84,7 @@ def array_get_default(array, index, default):
     return array[index] if index < len(array) else default
 
 
-def check_lights(unused_request):
+def check_lights():
     logger.info("on main()")
 
     # Get default credentials.
