@@ -25,10 +25,11 @@ M_SCHEDULED_TIMER = "scheduled_timer"
 
 
 def parse_time(time):
-    match = RE_TIME.match(time)
     time_obj = None
-    if match:
-        time_obj = datetime.time(int(match.group("hours")), int(match.group("minutes")), tzinfo=TIMEZONE)
+    if time:
+        match = RE_TIME.match(time)
+        if match:
+            time_obj = datetime.time(int(match.group("hours")), int(match.group("minutes")), tzinfo=TIMEZONE)
     return time_obj
 
 
@@ -79,7 +80,11 @@ def actuate(id, channel, new_status):
     logger.info("Request sent to Shelly. Returned status code: %s", req.status_code)
 
 
-def actuator(unused_request):
+def array_get_default(array, index, default):
+    return array[index] if index < len(array) else default
+
+
+def check_lights(unused_request):
     logger.info("on main()")
 
     # Get default credentials.
@@ -102,12 +107,12 @@ def actuator(unused_request):
         try:
             name = row[0]
             ext_id = row[1]
-            id = row[2]
-            channel = row[3] if row[3] else "0"
-            mode = row[4]
-            start_time = parse_time(row[5])
-            end_time = parse_time(row[6])
-            timer = parse_int(row[7])
+            id = array_get_default(row, 2, None)
+            channel = array_get_default(row, 3, "0")
+            mode = array_get_default(row, 4, None)
+            start_time = parse_time(array_get_default(row, 5, None))
+            end_time = parse_time(array_get_default(row, 6, None))
+            timer = parse_int(array_get_default(row, 7, None))
             logger.info("Processing [%s]. Mode: [%s]", name, mode)
             if is_active(start_time, end_time, current_time):
                 logger.debug("Rule for [%s] is active", name)
