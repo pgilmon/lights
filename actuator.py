@@ -77,7 +77,10 @@ def actuate(id, channel, new_status):
         "auth_key": firebase.get_key(),
         "turn": new_status
     })
-    logger.info("Request sent to Shelly. Returned status code: %s", req.status_code)
+    if req.status_code / 200 >= 1 and req.status_code % 200 == 0:
+        logger.info("Request sent to Shelly. Returned status code: %s", req.status_code)
+    else:
+        logger.error("Error while calling Shelly. Status code: [%s]. Response: [%s]", req.status_code, req.json())
 
 
 def array_get_default(array, index, default):
@@ -137,4 +140,4 @@ def check_lights():
 
 
 if __name__ == "__main__":
-    actuator(None)
+    check_lights()
