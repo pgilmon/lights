@@ -1,2 +1,0 @@
-firebase-admin==4.1.0
-google-cloud-logging==1.15.0
