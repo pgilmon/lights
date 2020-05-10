@@ -125,7 +125,7 @@ def check_lights():
                         if status == firebase.STATUS_ON:
                             if time.time() - last_update > timer * 60:
                                 logger.info("Time out. Switching off [%s].", name)
-                                actuate(id, firebase.STATUS_OFF)
+                                actuate(id, channel, firebase.STATUS_OFF)
                             else:
                                 logger.debug("[%s] is on, but no time out yet.", name)
                     else:
