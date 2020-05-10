@@ -23,7 +23,7 @@ def do_monitor(request):
     return "Success"
 
 
-def do_actuate(request):
+def do_actuator(request):
     """Responds to actuate HTTP request.
     Args:
         request (flask.Request): HTTP request object.
