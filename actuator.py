@@ -126,8 +126,8 @@ def actuator(unused_request):
                     else:
                         logger.info("[%s] not found and timer active. Switching off.")
                         actuate(id, channel, firebase.STATUS_OFF)
-        except Exception as e:
-            logger.error("Exception while processing row %s", i, e)
+        except Exception:
+            logger.exception("Exception while processing row %s", i)
         i += 1
 
 
