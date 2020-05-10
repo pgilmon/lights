@@ -18,7 +18,7 @@ def get_logger(name):
     logger = logging.getLogger(name)
     try:
         logger.addHandler(google.cloud.logging.Client().get_default_handler())
-        logger.setLevel(logging.INFO)
+        logger.setLevel(logging.DEBUG)
     except google.auth.exceptions.DefaultCredentialsError:
         print("Default credentials not found. Using default logging")
         logging.basicConfig(level=logging.INFO)
