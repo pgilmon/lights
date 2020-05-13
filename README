@@ -1,0 +1,8 @@
+Note: This is not an official Google product and
+it's not supported by Google in any way.
+
+Lights is an automation framework for smart switches or lights.
+
+It was initially developed to work with shelly.cloud devices, but
+could potentially work with any other devices that support
+webhooks and provide an API to send commands to the devices.
